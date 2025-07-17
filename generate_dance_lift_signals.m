@@ -1,33 +1,33 @@
-%% Time Base (10 seconds at 100Hz)
-t = (0:0.01:10)'; 
+%% Time Base (60 seconds at 100Hz)
+t = (0:0.01:60)';  % Time vector from 0 to 60 seconds in 0.01s steps
 deg2rad = @(x) x * pi / 180;
 
-%% Define Full-Body Dance Motion Based on Lyrics
+%% Define Full-Body Dance Motion
 
 % Shoulders & Hips: "Left right left"
-shoulder = deg2rad(25 * square(2 * pi * 0.5 * t));  % 0.5 Hz
-hip = deg2rad(15 * square(2 * pi * 0.5 * t));
+shoulder = deg2rad(25 * square(2 * pi * 0.5 * t));  % 0.5 Hz = 2s per cycle
+hip = deg2rad(15 * square(2 * pi * 0.5 * t));        % 0.5 Hz
 
-% Knees/Arms: "Up down up"
-lift = deg2rad(30 * square(2 * pi * 1 * t));  % 1 Hz
+% Elbows, Knees, Arms: "Up down up"
+lift = deg2rad(30 * square(2 * pi * 1 * t));         % 1 Hz
 
 % Wrists: "Wave wave"
-wave = deg2rad(20 * sin(2 * pi * 2.5 * t));   % 2.5 Hz
+wave = deg2rad(20 * sin(2 * pi * 2.5 * t));          % 2.5 Hz
 
-% Neck/Shoulder: "Spin"
-spin = deg2rad(15 * sin(2 * pi * 1 * t));     % 1 Hz
+% Neck and Shoulder: "Spin"
+spin = deg2rad(15 * sin(2 * pi * 1 * t));            % 1 Hz
 
-% Ankles: Bounce
-bounce = deg2rad(10 * sin(2 * pi * 1 * t));   % 1 Hz
+% Ankles: bounce
+bounce = deg2rad(10 * sin(2 * pi * 1 * t));          % 1 Hz
 
-%% Assign to Joints (Full Body)
+%% Assign to Joints
 
 % Shoulders
 left_shoulder_signal   = timeseries(shoulder, t);
 right_shoulder_signal  = timeseries(-shoulder, t);
-shoulder_motion_signal = timeseries(spin, t);  % for shoulder spin if needed
+shoulder_motion_signal = timeseries(spin, t);  % For additional shoulder motion
 
-% Upper shoulders (for richer movement)
+% Upper shoulder motion
 left2_shoulder_signal  = timeseries(0.5 * shoulder, t);
 right2_shoulder_signal = timeseries(-0.5 * shoulder, t);
 
@@ -51,10 +51,10 @@ ankle_lift_signal  = timeseries(bounce, t);
 ankle2_lift_signal = timeseries(-bounce, t);
 
 % Neck
-neck_signal            = timeseries(spin, t);
-neck_motion_signal     = timeseries(spin, t);  % For blocks named differently
+neck_signal        = timeseries(spin, t);
+neck_motion_signal = timeseries(spin, t);  % for different block naming
 
-%% Export All Signals to Base Workspace
+%% Send All Signals to Base Workspace for Simulink
 
 % Shoulders
 assignin('base', 'left_shoulder_signal',   left_shoulder_signal);
@@ -82,4 +82,4 @@ assignin('base', 'ankle2_lift_signal', ankle2_lift_signal);
 assignin('base', 'neck_signal',        neck_signal);
 assignin('base', 'neck_motion_signal', neck_motion_signal);
 
-disp("✅ Full-body dance signals loaded successfully.");
+disp("✅ 1-minute full-body dance signals loaded into base workspace.");
