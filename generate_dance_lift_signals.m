@@ -78,3 +78,15 @@ assignin('base', 'ankle2_lift_signal',     timeseries(ankle2_lift, t));
 assignin('base', 'neck_signal',            timeseries(neck_move, t));
 
 disp('✅ Lyric-based dance signals loaded into base workspace.');
+
+
+
+
+
+
+
+
+
+
+
+
